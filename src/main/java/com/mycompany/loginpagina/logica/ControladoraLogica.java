@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ControladoraLogica {
     
-    Usuario usser = new Usuario();
+    
     ControladoraPersistecia controlPersis;
 
     public ControladoraLogica() {
@@ -15,29 +15,35 @@ public class ControladoraLogica {
     }
     
 
-    public String validarUsser(String usser, String password) {
+    public boolean  validarUsser(String usser, String password) {
         
-        String mensaje ="";
+        boolean ok = false;
         //taer los usuario
         List <Usuario> listaUsuarios = controlPersis.traerUsuarios();
         //recorrer la lista para determinar si esta la contraseña y user
         for (Usuario use : listaUsuarios) {
-            
+            //Actcedmos al objeto  al nombre y se iguala al usuario ingresado desde el Jframe
             if (use.getName().equalsIgnoreCase(usser)) {
-                System.out.println(use.getName());
+                //Accedemos al objeto y determinamos si la clave es igual a la que ingreso por Jframe
                 if (use.getPassword().equalsIgnoreCase(password)) {
-                    mensaje = "El usuario y contraseña coinciden.. Bienvenido/a";
-                    return mensaje; 
+                    //Si es igual y se cumplen las condiciones retornamos true, para determinar el rol
+                    ok = true;
+                    return ok; 
                 } else {
-                    mensaje = "La contraseña es incorrecta ";
-                    return mensaje; 
+                    ok = false;
+                    return ok; 
                 }
             } else {
-                mensaje = "El usuario es incorrecto";
+                ok = false;
+                return ok;
                 
             }
         }
-        return mensaje; 
+        return ok; 
+    }
+
+    public String validarRol(String usser) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }

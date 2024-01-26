@@ -166,9 +166,30 @@ public class Login extends javax.swing.JFrame {
         String usser = txtUsser.getText();
         String password = txtContraseña.getText();
         
-        String mensaje = controlLogica.validarUsser(usser,password);
+        boolean validarRol = controlLogica.validarUsser(usser,password);
         
-        txtMensaje.setText(mensaje);
+        if (validarRol == true) {
+            
+            String rol = controlLogica.validarRol(usser);
+            if (rol.equalsIgnoreCase("Admin")) {
+                
+                PrincipalDamin pAdmin = new PrincipalDamin(controlLogica);
+                pAdmin.setVisible(true);
+                pAdmin.setLocationRelativeTo(null);
+                
+            }
+            if (rol.equalsIgnoreCase("User")) {
+                
+                PrincipalUser pUser = new PrincipalUser(controlLogica);
+                pUser.setVisible(true);
+                pUser.setLocationRelativeTo(null);
+                
+            }
+        } else {
+            txtMensaje.setText("Usuario o contraseña incorrectos");
+        }
+        
+        
         
     }//GEN-LAST:event_btnLoginActionPerformed
 

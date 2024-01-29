@@ -3,6 +3,8 @@ package com.mycompany.loginpagina.IGU;
 
 import com.mycompany.loginpagina.logica.ControladoraLogica;
 import com.mycompany.loginpagina.logica.Usuario;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 
 public class PrincipalUser extends javax.swing.JFrame {
@@ -24,7 +26,7 @@ public class PrincipalUser extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaUsuario = new javax.swing.JTable();
         btnRecargarTabla = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         txtFieldNombreUser = new javax.swing.JTextField();
@@ -41,7 +43,7 @@ public class PrincipalUser extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -52,7 +54,7 @@ public class PrincipalUser extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaUsuario);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -148,9 +150,37 @@ public class PrincipalUser extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.txtFieldNombreUser.setText(usr.getName());
+        cargaTabla();
     }//GEN-LAST:event_formWindowOpened
 
-    
+    private void cargaTabla() {
+        // Se define el modelo de la tabla
+        DefaultTableModel modelTabla = new DefaultTableModel(){
+            public boolean isCellEditable(int row, int column){ //metodo para que no se pueda editar la tabla
+                return false; 
+            }
+        };
+        
+        //Asignamos los titulos de la tabla, creando un vector
+        String vectorTitle[] = {"Id","Usuario","Rol"};
+        modelTabla.setColumnIdentifiers(vectorTitle);
+        
+        List <Usuario> listaUsuarios = controlLogico.traerUsuarios();
+        // Preguntamos si la lista tiene datos
+        if (listaUsuarios != null) { 
+            //Recorremos la lista
+            for(Usuario use : listaUsuarios){
+                // traemos los datos de cada fila y lo asginamos a el objeto
+                Object [] object = {use.getId_usser(),use.getName(),use.getUnRol().getNombreUsiario()};
+                //Añadimos el objeto al modelo tabla
+                modelTabla.addRow(object); 
+            }
+            
+        }
+        //Enviamos el modelo de la tabla a la tabla.
+        tablaUsuario.setModel(modelTabla);
+        
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnRecargarTabla;
     private javax.swing.JButton btnSalir;
@@ -158,7 +188,9 @@ public class PrincipalUser extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tablaUsuario;
     private javax.swing.JTextField txtFieldNombreUser;
     // End of variables declaration//GEN-END:variables
+
+    
 }

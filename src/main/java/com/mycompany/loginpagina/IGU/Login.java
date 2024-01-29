@@ -2,6 +2,7 @@
 package com.mycompany.loginpagina.IGU;
 
 import com.mycompany.loginpagina.logica.ControladoraLogica;
+import com.mycompany.loginpagina.logica.Usuario;
 
 
 public class Login extends javax.swing.JFrame {
@@ -166,21 +167,24 @@ public class Login extends javax.swing.JFrame {
         String usser = txtUsser.getText();
         String password = txtContraseña.getText();
         
-        boolean validarRol = controlLogica.validarUsser(usser,password);
+        //Creamos metodo para validar el usario y retornamos el obeejeto usuario
+        Usuario usr = controlLogica.validarUsser(usser,password);
         
-        if (validarRol == true) {
+        if (usr != null) { // Si el objeto es distinto a null, es decir que trae el objeto hacemos.
             
-            String rol = controlLogica.validarRol(usser);
+            //
+            String rol = usr.getUnRol().getNombreUsiario();
+            
             if (rol.equalsIgnoreCase("Admin")) {
                 
-                PrincipalDamin pAdmin = new PrincipalDamin(controlLogica);
+                PrincipalDamin pAdmin = new PrincipalDamin(controlLogica,usr);
                 pAdmin.setVisible(true);
                 pAdmin.setLocationRelativeTo(null);
                 
             }
             if (rol.equalsIgnoreCase("User")) {
                 
-                PrincipalUser pUser = new PrincipalUser(controlLogica);
+                PrincipalUser pUser = new PrincipalUser(controlLogica, usr);
                 pUser.setVisible(true);
                 pUser.setLocationRelativeTo(null);
                 

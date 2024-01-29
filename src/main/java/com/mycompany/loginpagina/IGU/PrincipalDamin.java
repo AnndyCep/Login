@@ -2,14 +2,17 @@
 package com.mycompany.loginpagina.IGU;
 
 import com.mycompany.loginpagina.logica.ControladoraLogica;
+import com.mycompany.loginpagina.logica.Usuario;
 
 
 public class PrincipalDamin extends javax.swing.JFrame {
     ControladoraLogica controlLogica;
+    Usuario usr;
     
-    public PrincipalDamin(ControladoraLogica controlLogica) {
+    public PrincipalDamin(ControladoraLogica controlLogica, Usuario usr) {
         initComponents();
         this.controlLogica = controlLogica;
+        this.usr = usr;
     }
 
     @SuppressWarnings("unchecked")
@@ -29,6 +32,11 @@ public class PrincipalDamin extends javax.swing.JFrame {
         txtFieldNombreUser = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("Sistema Adiminstrador de Usuarios");
@@ -87,7 +95,6 @@ public class PrincipalDamin extends javax.swing.JFrame {
 
         txtFieldNombreUser.setEditable(false);
         txtFieldNombreUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtFieldNombreUser.setText("jTextField1");
         txtFieldNombreUser.setBorder(null);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -101,7 +108,7 @@ public class PrincipalDamin extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtFieldNombreUser, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtFieldNombreUser, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44)
@@ -160,8 +167,12 @@ public class PrincipalDamin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.txtFieldNombreUser.setText(usr.getName());
+    }//GEN-LAST:event_formWindowOpened
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables

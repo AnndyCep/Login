@@ -17,7 +17,7 @@ public class Rol implements Serializable {
     private int id_rol;
     private String nombreUsiario;
     private String descripcion;
-    @OneToMany (mappedBy = "unRol") //Un rol puede tener mucho usuarios, se debe mapear a la claje Usario con el objeto creado.
+    @OneToMany (mappedBy = "unRol") //Un rol puede tener mucho usuarios, se debe mapear a la clave Usario con el objeto creado.
     private List<Usuario> listaUsuarios;
     
     public Rol() {

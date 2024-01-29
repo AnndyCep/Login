@@ -15,9 +15,9 @@ public class ControladoraLogica {
     }
     
 
-    public boolean  validarUsser(String usser, String password) {
+    public Usuario  validarUsser(String usser, String password) {
         
-        boolean ok = false;
+        Usuario usr = null;
         //taer los usuario
         List <Usuario> listaUsuarios = controlPersis.traerUsuarios();
         //recorrer la lista para determinar si esta la contraseña y user
@@ -26,24 +26,21 @@ public class ControladoraLogica {
             if (use.getName().equalsIgnoreCase(usser)) {
                 //Accedemos al objeto y determinamos si la clave es igual a la que ingreso por Jframe
                 if (use.getPassword().equalsIgnoreCase(password)) {
-                    //Si es igual y se cumplen las condiciones retornamos true, para determinar el rol
-                    ok = true;
-                    return ok; 
+                    //Si es igual y se cumplen las condiciones retornamos el obejto, para determinar el rol
+                    usr = use;
+                    return usr; 
                 } else {
-                    ok = false;
-                    return ok; 
+                    usr = null;
+                    return usr; 
                 }
             } else {
-                ok = false;
-                return ok;
+                usr = null;
+                    
                 
             }
         }
-        return ok; 
+        return usr; 
     }
 
-    public String validarRol(String usser) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
     
 }

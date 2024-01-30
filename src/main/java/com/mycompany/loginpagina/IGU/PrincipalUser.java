@@ -75,6 +75,11 @@ public class PrincipalUser extends javax.swing.JFrame {
 
         btnRecargarTabla.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnRecargarTabla.setText("Recargar Tabla");
+        btnRecargarTabla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRecargarTablaActionPerformed(evt);
+            }
+        });
 
         btnSalir.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnSalir.setText("Salir");
@@ -153,9 +158,14 @@ public class PrincipalUser extends javax.swing.JFrame {
         cargaTabla();
     }//GEN-LAST:event_formWindowOpened
 
+    private void btnRecargarTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecargarTablaActionPerformed
+       cargaTabla();
+    }//GEN-LAST:event_btnRecargarTablaActionPerformed
+
     private void cargaTabla() {
         // Se define el modelo de la tabla
         DefaultTableModel modelTabla = new DefaultTableModel(){
+            @Override
             public boolean isCellEditable(int row, int column){ //metodo para que no se pueda editar la tabla
                 return false; 
             }

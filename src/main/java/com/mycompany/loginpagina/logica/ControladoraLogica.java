@@ -46,5 +46,63 @@ public class ControladoraLogica {
         return controlPersis.traerUsuarios();
     }
 
+    public List<Rol> traerRoles() {
+        return controlPersis.traerRoles();
+    }
+
+    public void crearRol(String nombreUsuario, String password, String tipoUser) {
+        //creamo un obteno usuario para setiar los valores que ingresaron 
+        Usuario usuario = new Usuario();
+        usuario.setName(nombreUsuario);
+        usuario.setPassword(password);
+        
+        
+        //Como tipoUser un string pero rol es un objeto dentro de user debemos acceder de una formo distinta
+        //Creamos un objeto rol vacio
+        Rol rol = new Rol();
+        //Asignamos al objeto, un metodo que treera el rol, y se enviara por parametro el rol que se encontrara
+        rol = this.traerRol(tipoUser);
+        
+        //validamos que el rol no este vacio
+        if (rol!= null) {
+            //Al objeto usuario se le envia el rol
+            usuario.setUnRol(rol);
+        }
+        // se crea variable para tomar el id disponible,, se crea metodo con el fin de consultar cual es el Id disponible
+        int id = this.encontrarIdusuario();
+        // Enviamos al objeto usuario la pocision disponible sumandole uno mas.
+        usuario.setId_usser(id + 1); 
+        
+        controlPersis.crearUsuario(usuario);
+        
+        
+    }
+
+    private Rol traerRol(String tipoUser) {
+        //Creamos una lista, que retorna objetos con los roles
+        List<Rol> listaRoles = controlPersis.traerRoles();
+        
+        if (listaRoles != null) {
+            //Iteramos sobre cada objeto, para confirmar si coincide con el que ingreso en la creacion
+            for (Rol rol : listaRoles) {
+                //consultamos por cada objeto
+                if (rol.getNombreUsiario().equalsIgnoreCase(tipoUser)) {
+                    return rol;
+                }
+            }
+        }
+        return null;
+    }
+
+    private int encontrarIdusuario() {
+        //Creamos una lista donde traemos los datos del los usuarios
+        List <Usuario> listaUsuario = this.traerUsuarios();
+        //creamos un obejeto usu, donde guarmados el ultimo objeto de la lista
+        Usuario usu = listaUsuario.get(listaUsuario.size()-1);
+        //retornamos el Id del ultimo obejto guardado
+        return usu.getId_usser();
+        
+    }
+
     
 }

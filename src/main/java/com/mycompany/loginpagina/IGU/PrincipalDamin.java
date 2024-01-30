@@ -3,6 +3,8 @@ package com.mycompany.loginpagina.IGU;
 
 import com.mycompany.loginpagina.logica.ControladoraLogica;
 import com.mycompany.loginpagina.logica.Usuario;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
 
 
 public class PrincipalDamin extends javax.swing.JFrame {
@@ -23,7 +25,7 @@ public class PrincipalDamin extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        TablaAdmin = new javax.swing.JTable();
         btnEditar = new javax.swing.JButton();
         btnCrearUser = new javax.swing.JButton();
         btnRecargarTabla = new javax.swing.JButton();
@@ -43,7 +45,7 @@ public class PrincipalDamin extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaAdmin.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -54,7 +56,7 @@ public class PrincipalDamin extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(TablaAdmin);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -78,6 +80,11 @@ public class PrincipalDamin extends javax.swing.JFrame {
 
         btnCrearUser.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCrearUser.setText("Crear Usuario");
+        btnCrearUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearUserActionPerformed(evt);
+            }
+        });
 
         btnRecargarTabla.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnRecargarTabla.setText("Recargar Tabla");
@@ -172,10 +179,52 @@ public class PrincipalDamin extends javax.swing.JFrame {
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         this.txtFieldNombreUser.setText(usr.getName());
+        cargarTabla();
     }//GEN-LAST:event_formWindowOpened
 
+    private void btnCrearUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUserActionPerformed
+        
+        CrearUsuario pantalla = new CrearUsuario(controlLogica);
+        pantalla.setVisible(true);
+        pantalla.setLocationRelativeTo(null);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnCrearUserActionPerformed
+    
+    private void cargarTabla() {
+        
+        DefaultTableModel modelTable = new DefaultTableModel(){
+          //No se pueda modificar la tabla
+            @Override
+            public boolean isCellEditable (int row, int column){
+                return false;
+            }
+        };
+        
+        //Creando el encabezado de la tabla
+        String headTable[] = {"Id","Usuario","Rol"};
+        //Enviando en encabezado a al modelo
+        modelTable.setColumnIdentifiers(headTable);
+        
+        //Enviando la lista de usuarios
+        List<Usuario> listaUsiarios = controlLogica.traerUsuarios();
+        
+        if (listaUsiarios != null) {
+            for (Usuario use : listaUsiarios) {
+                Object [] object = {use.getId_usser(),use.getName(),use.getUnRol().getNombreUsiario()};
+                modelTable.addRow(object);
+            }
+        }
+        
+        
+        TablaAdmin.setModel(modelTable);
+        
+        
+        
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TablaAdmin;
     private javax.swing.JButton btnBorrarUser;
     private javax.swing.JButton btnCrearUser;
     private javax.swing.JButton btnEditar;
@@ -185,7 +234,8 @@ public class PrincipalDamin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtFieldNombreUser;
     // End of variables declaration//GEN-END:variables
+
+    
 }

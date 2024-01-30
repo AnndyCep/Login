@@ -104,5 +104,9 @@ public class ControladoraLogica {
         
     }
 
+    public void eliminarUsuario(int id_usuario) {
+        controlPersis.eliminarUsuario(id_usuario);
+    }
+
     
 }

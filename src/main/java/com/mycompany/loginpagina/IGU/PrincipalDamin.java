@@ -4,6 +4,8 @@ package com.mycompany.loginpagina.IGU;
 import com.mycompany.loginpagina.logica.ControladoraLogica;
 import com.mycompany.loginpagina.logica.Usuario;
 import java.util.List;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -99,6 +101,11 @@ public class PrincipalDamin extends javax.swing.JFrame {
 
         btnBorrarUser.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnBorrarUser.setText("Borrar Usuario");
+        btnBorrarUser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBorrarUserActionPerformed(evt);
+            }
+        });
 
         txtFieldNombreUser.setEditable(false);
         txtFieldNombreUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -190,7 +197,43 @@ public class PrincipalDamin extends javax.swing.JFrame {
         this.dispose();
         
     }//GEN-LAST:event_btnCrearUserActionPerformed
+
+    private void btnBorrarUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarUserActionPerformed
+        
+        //Validar que la tabla tenga datos
+        if (TablaAdmin.getRowCount() > 0) {
+            //controlar que se haya seleccionado un elemento
+            if (TablaAdmin.getSelectedRow() != -1) {
+                int id_usuario = Integer.parseInt(String.valueOf(TablaAdmin.getValueAt(TablaAdmin.getSelectedRow(),0)));
+                controlLogica.eliminarUsuario(id_usuario);
+                
+                mostrarMensaje("Se elimino de forma correcta", "Info", "Eliminado Ok");
+                cargarTabla();
+            } else {
+                mostrarMensaje("No selecciono datos en la tabla", "Error", "Error");
+            }
+        } else {
+            mostrarMensaje("No tiene datos en la tabla", "Error", "Error");
+        }
+        
+    }//GEN-LAST:event_btnBorrarUserActionPerformed
     
+    
+     private void mostrarMensaje(String mensaje, String tipo, String titulo){
+        
+        JOptionPane optionPane = new JOptionPane(mensaje);
+            if (tipo.equalsIgnoreCase("Info")) {
+                optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
+            } else if (tipo.equalsIgnoreCase("Error")) {
+            optionPane.setMessageType(JOptionPane.ERROR_MESSAGE);
+            }
+        
+        JDialog dialog = optionPane.createDialog(titulo);
+        dialog.setAlwaysOnTop(true);
+        dialog.setVisible(true);
+        
+    }
+     
     private void cargarTabla() {
         
         DefaultTableModel modelTable = new DefaultTableModel(){

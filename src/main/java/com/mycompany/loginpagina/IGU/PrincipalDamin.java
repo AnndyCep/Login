@@ -79,6 +79,11 @@ public class PrincipalDamin extends javax.swing.JFrame {
 
         btnEditar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnEditar.setText("Editar Usuario");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         btnCrearUser.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCrearUser.setText("Crear Usuario");
@@ -191,7 +196,7 @@ public class PrincipalDamin extends javax.swing.JFrame {
 
     private void btnCrearUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearUserActionPerformed
         
-        CrearUsuario pantalla = new CrearUsuario(controlLogica);
+        CrearUsuario pantalla = new CrearUsuario(controlLogica, usr);
         pantalla.setVisible(true);
         pantalla.setLocationRelativeTo(null);
         this.dispose();
@@ -217,6 +222,31 @@ public class PrincipalDamin extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnBorrarUserActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        
+        //confirmar que la tabla tenga datos
+        if (TablaAdmin.getRowCount() > 0) {
+            //confirmar que haya seleccionado una fila
+            if (TablaAdmin.getSelectedRow() != -1) {
+                //trear el ID 
+                int id_user = Integer.parseInt(String.valueOf(TablaAdmin.getValueAt(TablaAdmin.getSelectedRow(),0 )));
+                
+                EditarUser pantalla = new EditarUser(controlLogica,id_user);
+                pantalla.setVisible(true);
+                pantalla.setLocationRelativeTo(null);
+                this.dispose();
+                
+            } else {
+                mostrarMensaje("No selecciono datos en la tabla", "Error", "Error en editar");
+            }
+        
+        } else {
+            mostrarMensaje("Tabla no tiene datos para editar", "Error", "Error en editar");
+        }
+                       
+    }//GEN-LAST:event_btnEditarActionPerformed
+    
     
     
      private void mostrarMensaje(String mensaje, String tipo, String titulo){

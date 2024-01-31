@@ -33,5 +33,18 @@ public class ControladoraPersistecia {
             Logger.getLogger(ControladoraPersistecia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public Usuario traerUsuario(int id_user) {
+        return usuarioJpa.findUsuario(id_user);
+    }
+
+    public void editarDatos(Usuario usu) {
+        try {
+            usuarioJpa.edit(usu);
+        } catch (Exception ex) {
+            Logger.getLogger(ControladoraPersistecia.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
     
 }

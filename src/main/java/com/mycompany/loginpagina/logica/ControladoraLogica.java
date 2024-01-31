@@ -108,5 +108,31 @@ public class ControladoraLogica {
         controlPersis.eliminarUsuario(id_usuario);
     }
 
+    public Usuario traerUsuario(int id_user) {
+        return controlPersis.traerUsuario(id_user);
+    }
+
+    public void editarUsuario(Usuario usu, String nombreUsuario, String password, String tipoUser) {
+        
+        //Seteamos los datos que traemos del objeto
+        usu.setName(nombreUsuario);
+        usu.setPassword(password);
+        
+        //para setear los datos del tipo de usuario se debe realizar,
+        //Creamos un objeto vacio
+        Rol rol = new Rol();
+        rol = traerRol(tipoUser);
+        
+        if (rol != null) {
+            usu.setUnRol(rol);
+        }
+        
+        controlPersis.editarDatos(usu);
+        
+        
+        
+        
+    }
+
     
 }
